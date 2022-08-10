@@ -21,7 +21,7 @@ void print_usage(ostream& o, const char* name, size_t capacity);
 class BaseMachine
 {
 protected:
-    static BaseMachine* singleton;
+    //	static BaseMachine* singleton;
 
     std::map<int,TimerWithComm> timer;
 
@@ -34,6 +34,7 @@ protected:
     virtual void load_program(const string& threadname, const string& filename);
 
 public:
+    static thread_local BaseMachine* singleton;
     static thread_local int thread_num;
 
     string progname;

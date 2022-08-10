@@ -11,15 +11,27 @@
 #include "OT/MascotParams.h"
 #include "OT/OTMultiplier.h"
 
+#include "Processor/BaseMachine.h"
+#include "Processor/OnlineOptions.h"
+
 #include <map>
 #include <vector>
 
 #define N_AMPLIFY 3
 
+
 template <class T, int N>
 class ShareTriple;
 template <class T, int N>
 class PlainTriple;
+
+class OTThreadInfo
+{
+public:
+  OnlineOptions online_options_tmp;
+  BaseMachine* basemachine_tmp;
+  void* multiplier;
+};
 
 class GeneratorThread
 {
@@ -117,6 +129,9 @@ public:
     mac_key_type get_mac_key() const { return mac_key; }
 
     Player& get_player() { return globalPlayer; }
+
+private:
+    std::vector<OTThreadInfo > vec_thinfo;
 };
 
 template<class T>

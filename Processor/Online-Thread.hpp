@@ -36,6 +36,14 @@ void thread_info<sint, sgf2n>::Sub_Main_Func()
   bigint::init_thread();
 
   auto tinfo = this;
+  OnlineOptions::singleton = tinfo->online_options_tmp;
+  BaseMachine::singleton = tinfo->basemachine_tmp;
+
+  // Set up the fields
+  sint::clear::read_or_generate_setup(
+        OnlineOptions::singleton.prep_dir_prefix<sint>(tinfo->Nms->num_players()), 
+        OnlineOptions::singleton);
+
   Machine<sint, sgf2n>& machine=*(tinfo->machine);
   vector<Program>& progs                = machine.progs;
 

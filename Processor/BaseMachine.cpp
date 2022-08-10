@@ -11,7 +11,7 @@
 #include <sodium.h>
 using namespace std;
 
-BaseMachine* BaseMachine::singleton = 0;
+thread_local BaseMachine* BaseMachine::singleton = 0;
 thread_local int BaseMachine::thread_num;
 
 void print_usage(ostream& o, const char* name, size_t capacity)

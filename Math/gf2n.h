@@ -49,6 +49,7 @@ protected:
 
   static octet mult_table[256][256];
 
+  static int init_flag;
   static void init_tables();
   static void init_multiplication();
 

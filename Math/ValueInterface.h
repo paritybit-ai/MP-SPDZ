@@ -12,6 +12,13 @@ class OnlineOptions;
 class bigint;
 class PRNG;
 
+#define BEGIN_INIT_FIELD()  if (1 == init_flag) { return ;} \
+                            static std::mutex init_mutex; std::lock_guard<std::mutex> guard(init_mutex); \
+                            if (1 == init_flag) { return ;}
+
+#define END_INIT_FIELD()    init_flag = 1;
+
+
 class ValueInterface
 {
 public:

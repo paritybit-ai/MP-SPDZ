@@ -6,11 +6,14 @@
 #include "gfpvar.h"
 #include "Setup.h"
 #include "Protocols/Share.h"
-
 #include "gfp.hpp"
+#include <mutex>
 
 template<int X, int L>
 Zp_Data gfpvar_<X, L>::ZpD;
+
+template<int X, int L>
+int gfpvar_<X, L>::init_ZpD_flag=0;
 
 template<int X, int L>
 string gfpvar_<X, L>::type_string()
@@ -69,7 +72,20 @@ DataFieldType gfpvar_<X, L>::field_type()
 template<int X, int L>
 void gfpvar_<X, L>::init_field(bigint prime, bool montgomery)
 {
+    if (1 == init_ZpD_flag)
+    {
+      return ;
+    }
+    static std::mutex init_mutex;
+    std::lock_guard<std::mutex> guard(init_mutex);
+    if (1 == init_ZpD_flag)
+    {
+      return ;
+    }
+
     ZpD.init(prime, montgomery);
+    init_ZpD_flag = 1;
+    
     if (ZpD.get_t() > N_LIMBS)
         throw wrong_gfp_size("gfpvar_<X, L>", prime, "MAX_MOD_SZ", ZpD.get_t() * 2);
 }

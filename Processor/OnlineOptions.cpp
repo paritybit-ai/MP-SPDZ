@@ -14,7 +14,7 @@
 
 using namespace std;
 
-OnlineOptions OnlineOptions::singleton;
+thread_local OnlineOptions OnlineOptions::singleton;
 HemiOptions HemiOptions::singleton;
 
 OnlineOptions::OnlineOptions() : playerno(-1)

@@ -24,7 +24,12 @@
 template<class T>
 void* run_ot_thread(void* ptr)
 {
-    ((OTMultiplierBase*)ptr)->multiply();
+    //  ((OTMultiplierBase*)ptr)->multiply();
+    OTThreadInfo* thinfo = (OTThreadInfo*)ptr;
+    OnlineOptions::singleton = thinfo->online_options_tmp;
+    BaseMachine::singleton = thinfo->basemachine_tmp;
+    ((OTMultiplierBase*)thinfo->multiplier)->multiply();
+
     return NULL;
 }
 
@@ -122,10 +127,16 @@ OTTripleGenerator<T>::OTTripleGenerator(const OTTripleSetup& setup,
 
     ot_multipliers.resize(nparties-1);
 
+    vec_thinfo.resize(nparties-1);
+
     for (int i = 0; i < nparties-1; i++)
     {
         ot_multipliers[i] = new_multiplier(i);
-        pthread_create(&(ot_multipliers[i]->thread), 0, run_ot_thread<T>, ot_multipliers[i]);
+        //  pthread_create(&(ot_multipliers[i]->thread), 0, run_ot_thread<T>, ot_multipliers[i]);
+        vec_thinfo[i].multiplier = ot_multipliers[i];
+        vec_thinfo[i].online_options_tmp = OnlineOptions::singleton;
+        vec_thinfo[i].basemachine_tmp = BaseMachine::singleton;
+        pthread_create(&(ot_multipliers[i]->thread), 0, run_ot_thread<T>, &vec_thinfo[i]);
     }
 
     wait_for_multipliers();

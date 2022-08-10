@@ -6,6 +6,7 @@
 #include "Tools/Exceptions.h"
 
 #include <stdint.h>
+#include <mutex>
 
 const false_type ValueInterface::characteristic_two;
 const false_type ValueInterface::prime_field;
@@ -15,6 +16,8 @@ template<class U>
 int gf2n_<U>::l[4];
 template<class U>
 bool gf2n_<U>::useC;
+template<class U>
+int gf2n_<U>::init_flag=0;
 
 word gf2n_short_table[256][256];
 
@@ -101,6 +104,7 @@ void gf2n_short::init_field(int nn)
 template<class U>
 void gf2n_<U>::init_field(int nn)
 {
+  BEGIN_INIT_FIELD();
   if (nn == 0)
     {
       nn = MAX_N_BITS;
@@ -152,6 +156,7 @@ void gf2n_<U>::init_field(int nn)
 #else
   useC = true;
 #endif
+  END_INIT_FIELD();
 }
 
 

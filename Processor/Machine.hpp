@@ -176,6 +176,8 @@ void Machine<sint, sgf2n>::prepare(const string& progname_str)
       tinfo[i].alphapi=&alphapi;
       tinfo[i].alpha2i=&alpha2i;
       tinfo[i].machine=this;
+      tinfo[i].online_options_tmp = OnlineOptions::singleton;
+      tinfo[i].basemachine_tmp = BaseMachine::singleton;
       pthread_create(&threads[i],NULL,thread_info<sint, sgf2n>::Main_Func,&tinfo[i]);
     }
 

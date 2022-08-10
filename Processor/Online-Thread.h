@@ -9,6 +9,7 @@
 #include <vector>
 using namespace std;
 
+class BaseMachine;
 template<class sint, class sgf2n> class Machine;
 
 template<class sint, class sgf2n>
@@ -17,6 +18,8 @@ class thread_info
   public: 
 
   int thread_num;
+  OnlineOptions online_options_tmp;
+  BaseMachine* basemachine_tmp;
   Names*  Nms;
   typename sgf2n::mac_key_type *alpha2i;
   typename sint::mac_key_type *alphapi;

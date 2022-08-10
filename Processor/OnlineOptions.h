@@ -13,7 +13,7 @@
 class OnlineOptions
 {
 public:
-    static OnlineOptions singleton;
+    static thread_local OnlineOptions singleton;
 
     bool interactive;
     int lgp;

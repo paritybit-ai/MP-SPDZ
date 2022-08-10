@@ -57,7 +57,9 @@ class gfp_ : public ValueInterface
 
   modp_type a;
   static Zp_Data ZpD;
-
+  
+  static int init_ZpD_flag;
+  
   static thread_local vector<gfp_> powers;
 
   public:
@@ -304,6 +306,9 @@ typedef gfp_<1, GFP_MOD_SZ> gfp1;
 
 template<int X, int L>
 Zp_Data gfp_<X, L>::ZpD;
+
+template<int X, int L>
+int gfp_<X, L>::init_ZpD_flag;
 
 template<int X, int L>
 thread_local vector<gfp_<X, L>> gfp_<X, L>::powers;

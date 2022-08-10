@@ -28,6 +28,7 @@ class gfpvar_
     typedef modp_<L> modp_type;
 
     static Zp_Data ZpD;
+    static int init_ZpD_flag;
 
     modp_type a;
 

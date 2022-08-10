@@ -9,6 +9,7 @@
 
 #include "Math/bigint.hpp"
 #include "Math/Setup.hpp"
+#include <mutex>
 
 template<int X, int L>
 const true_type gfp_<X, L>::invertible;
@@ -36,7 +37,20 @@ void gfp_<X, L>::check_setup(string dir)
 template<int X, int L>
 void gfp_<X, L>::init_field(const bigint& p, bool mont)
 {
+  if (1 == init_ZpD_flag)
+  {
+    return ;
+  }
+  static std::mutex init_mutex;
+  std::lock_guard<std::mutex> guard(init_mutex);
+  if (1 == init_ZpD_flag)
+  {
+    return ;
+  }
+
   ZpD.init(p, mont);
+  init_ZpD_flag = 1;
+
   char name[100];
   snprintf(name, 100, "gfp_<%d, %d>", X, L);
   if (ZpD.get_t() > L)
