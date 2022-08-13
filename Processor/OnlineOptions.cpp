@@ -40,6 +40,7 @@ OnlineOptions::OnlineOptions() : playerno(-1)
 #else
     verbose = false;
 #endif
+    pMemInput = NULL;
 }
 
 OnlineOptions::OnlineOptions(ez::ezOptionParser& opt, int argc,
@@ -107,6 +108,15 @@ OnlineOptions::OnlineOptions(ez::ezOptionParser& opt, int argc,
             "Batch size for sacrifice (3-5, default: 4)", // Help description.
             "-B", // Flag token.
             "--bucket-size" // Flag token.
+    );
+    opt.add(
+            "0", // Default.
+            0, // Required?
+            1, // Number of args expected.
+            0, // Delimiter if expecting multiple args.
+            "Memory address info of this machine’s data (default: invalid options)", // Help description.
+            "-mi", // Flag token.
+            "--memory-input" // Flag token.
     );
 
     if (security)
@@ -311,6 +321,16 @@ void OnlineOptions::finalize(ez::ezOptionParser& opt, int argc,
         else
             sscanf((*allArgs[1]).c_str(), "%d", &playerno);
         progname = *allArgs[2 - opt.isSet("-p")];
+    }
+    if (opt.isSet("-mi"))
+    {
+        unsigned long Tmp = 0;
+        opt.get("-mi")->getULong(Tmp);
+        pMemInput = (void*)Tmp;
+    }
+    else
+    {
+        pMemInput = NULL;
     }
 
     if (!opt.gotRequired(badOptions))

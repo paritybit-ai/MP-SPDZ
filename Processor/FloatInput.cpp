@@ -4,15 +4,24 @@
  */
 
 #include "FloatInput.h"
+#include "Tools/MemoryStream.h"
 
 #include <math.h>
 
 const char* FloatInput::NAME = "real number";
 
-void FloatInput::read(std::istream& in, const int* params)
+void FloatInput::read(std::istream& in, const int* params, int nmemflag)
 {
     double x;
-    in >> x;
+    if (0 == nmemflag)
+    {
+        in >> x;
+    }
+    else
+    {
+        CMemoryStream& memStream = dynamic_cast<CMemoryStream&>(in);
+        memStream >> x;
+    }
     int exp;
     double mant = fabs(frexp(x, &exp));
 

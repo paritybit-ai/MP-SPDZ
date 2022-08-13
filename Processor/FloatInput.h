@@ -21,7 +21,7 @@ public:
 
     long items[N_DEST];
 
-    void read(std::istream& in, const int* params);
+    void read(std::istream& in, const int* params, int nmemflag=0);
 };
 
 #endif /* PROCESSOR_FLOATINPUT_H_ */

@@ -34,6 +34,7 @@ public:
     int trunc_error;
     int opening_sum, max_broadcast;
     bool receive_threads;
+    void* pMemInput;
 
     OnlineOptions();
     OnlineOptions(ez::ezOptionParser& opt, int argc, const char** argv,

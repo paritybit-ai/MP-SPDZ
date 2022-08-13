@@ -8,6 +8,16 @@
 ProcessorBase::ProcessorBase() :
         input_counter(0), arg(0)
 {
+    pmem_stream = nullptr;
+}
+
+ProcessorBase::~ProcessorBase()
+{
+    if (nullptr != pmem_stream)
+    {
+        delete pmem_stream;
+        pmem_stream = nullptr;
+    }
 }
 
 string ProcessorBase::get_parameterized_filename(int my_num, int thread_num, const string& prefix)

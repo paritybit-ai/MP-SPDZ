@@ -23,7 +23,7 @@ public:
 
     T items[N_DEST];
 
-    void read(std::istream& in, const int* params);
+    void read(std::istream& in, const int* params, int nmemflag=0);
 };
 
 template<class T>

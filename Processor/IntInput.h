@@ -20,7 +20,7 @@ public:
 
     T items[N_DEST];
 
-    void read(std::istream& in, const int* params);
+    void read(std::istream& in, const int* params, int nmemflag=0);
 };
 
 #endif /* PROCESSOR_INTINPUT_H_ */
